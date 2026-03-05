@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Arsh Mini Game</title>
+
+<style>
+body{
+background:black;
+color:white;
+text-align:center;
+font-family:Arial;
+}
+
+canvas{
+background:#222;
+margin-top:20px;
+border:2px solid white;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Catch the Square 🎮</h1>
+<p>Score: <span id="score">0</span></p>
+
+<canvas id="game" width="400" height="400"></canvas>
+
+<script>
+
+let canvas = document.getElementById("game");
+let ctx = canvas.getContext("2d");
+
+let x = 100;
+let y = 100;
+let size = 40;
+let score = 0;
+
+function drawSquare(){
+ctx.clearRect(0,0,400,400);
+
+ctx.fillStyle = "red";
+ctx.fillRect(x,y,size,size);
+}
+
+function moveSquare(){
+x = Math.random()*360;
+y = Math.random()*360;
+}
+
+canvas.addEventListener("click", function(e){
+
+let rect = canvas.getBoundingClientRect();
+let mouseX = e.clientX - rect.left;
+let mouseY = e.clientY - rect.top;
+
+if(mouseX > x && mouseX < x+size && mouseY > y && mouseY < y+size){
+score++;
+document.getElementById("score").innerText = score;
+moveSquare();
+}
+
+});
+
+function gameLoop(){
+drawSquare();
+requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
+
+</script>
+
+</body>
+</html>
